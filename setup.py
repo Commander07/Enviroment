@@ -15,5 +15,8 @@ setup(
     author='Commander07',
     url='https://github.com/commander07/enviroment',
     license=license,
-    packages=["enviroment"]
+    packages=["enviroment"],
+    install_requires=[
+        'rich',
+    ],
 )
