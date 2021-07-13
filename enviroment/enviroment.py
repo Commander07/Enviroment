@@ -1,4 +1,4 @@
-import logging
+from logging import getLogger, Formatter, Logger
 from random import randint
 from typing import Literal
 from .common import Level
@@ -21,11 +21,11 @@ class Enviroment(object):
         self.name = name
         self.logger_level = logger_level
         self.logger_handler = RichHandler(log_time_format="[%X]", markup=True)
-        self.logger = logging.getLogger(self.name)
+        self.logger = getLogger(self.name)
         self.logger.addHandler(self.logger_handler)
         self.console = Console(record=record)
         self.color = color
-        self.logger_handler.setFormatter(logging.Formatter(
+        self.logger_handler.setFormatter(Formatter(
             f"[color({self.color})]{self.name}[/color({self.color})]\t%(message)s"))
         self.set_logger_level(logger_level)
         self.logger.debug("'%s' Enviroment created", self.name)
@@ -65,7 +65,7 @@ class Enviroment(object):
         """
         return self.logger_handler
 
-    def get_logger(self) -> logging.Logger:
+    def get_logger(self) -> Logger:
         """       
         Get the logger of the enviroment       
         """
@@ -105,7 +105,7 @@ class Enviroment(object):
         Set the color of the enviroment name
         """
         self.color = color
-        self.logger_handler.setFormatter(logging.Formatter(
+        self.logger_handler.setFormatter(Formatter(
             f"[color({self.color})]{self.name}[/color({self.color})]\t%(message)s"))
 
     def set_name(self, name: str) -> None:
@@ -115,5 +115,5 @@ class Enviroment(object):
         self.logger.debug("'%s' Enviroment name set to '%s'", self.name, name)
         self.logger.name = self.name
         self.name = name
-        self.logger_handler.setFormatter(logging.Formatter(
+        self.logger_handler.setFormatter(Formatter(
             f"[color({self.color})]{self.name}[/color({self.color})]\t%(message)s"))

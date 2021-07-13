@@ -9,7 +9,7 @@ with open('LICENSE') as f:
 
 setup(
     name='Enviroment',
-    version='0.1.0',
+    version='0.1.1',
     description='Simple but effective logging & more.',
     long_description=readme,
     author='Commander07',
