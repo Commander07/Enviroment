@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 
 
 with open('README.md') as f:
@@ -15,5 +15,5 @@ setup(
     author='Commander07',
     url='https://github.com/commander07/enviroment',
     license=license,
-    packages=find_packages(exclude=('gallery', 'docs'))
+    packages=["enviroment"]
 )

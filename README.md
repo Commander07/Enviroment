@@ -16,7 +16,7 @@ Simple but effective logging & more.
 ```bash
 git clone https://github.com/commander07/enviroments.git
 cd enviroments
-python setup.py
+python setup.py install
 ```
 
 ## Documentation avaiable [here](https://commander07.github.io/Enviroment/)
