@@ -19,4 +19,6 @@ cd enviroments
 python setup.py install
 ```
 
+## Example uses [here](https://github.com/Commander07/Enviroment/tree/master/gallery)
+
 ## Documentation avaiable [here](https://commander07.github.io/Enviroment/)
