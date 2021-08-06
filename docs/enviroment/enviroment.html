@@ -26,9 +26,10 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">import logging
+<pre><code class="python">from logging import getLogger, Formatter, Logger
 from random import randint
 from typing import Literal
+from time import time
 from .common import Level
 try:
     from rich.logging import RichHandler
@@ -49,14 +50,15 @@ class Enviroment(object):
         self.name = name
         self.logger_level = logger_level
         self.logger_handler = RichHandler(log_time_format=&#34;[%X]&#34;, markup=True)
-        self.logger = logging.getLogger(self.name)
+        self.logger = getLogger(self.name)
         self.logger.addHandler(self.logger_handler)
         self.console = Console(record=record)
         self.color = color
-        self.logger_handler.setFormatter(logging.Formatter(
+        self.logger_handler.setFormatter(Formatter(
             f&#34;[color({self.color})]{self.name}[/color({self.color})]\t%(message)s&#34;))
         self.set_logger_level(logger_level)
         self.logger.debug(&#34;&#39;%s&#39; Enviroment created&#34;, self.name)
+        self._time = time()
 
     def __del__(self):
         &#34;&#34;&#34;
@@ -93,7 +95,7 @@ class Enviroment(object):
         &#34;&#34;&#34;
         return self.logger_handler
 
-    def get_logger(self) -&gt; logging.Logger:
+    def get_logger(self) -&gt; Logger:
         &#34;&#34;&#34;       
         Get the logger of the enviroment       
         &#34;&#34;&#34;
@@ -110,6 +112,12 @@ class Enviroment(object):
         Get the logger level name of the enviroment       
         &#34;&#34;&#34;
         return Level(self.logger_level).name
+
+    def get_runtime(self) -&gt; float:
+        &#34;&#34;&#34;       
+        Get the runtime of the enviroment       
+        &#34;&#34;&#34;
+        return time() - self._time
 
     #  Setters
 
@@ -133,7 +141,7 @@ class Enviroment(object):
         Set the color of the enviroment name
         &#34;&#34;&#34;
         self.color = color
-        self.logger_handler.setFormatter(logging.Formatter(
+        self.logger_handler.setFormatter(Formatter(
             f&#34;[color({self.color})]{self.name}[/color({self.color})]\t%(message)s&#34;))
 
     def set_name(self, name: str) -&gt; None:
@@ -143,7 +151,7 @@ class Enviroment(object):
         self.logger.debug(&#34;&#39;%s&#39; Enviroment name set to &#39;%s&#39;&#34;, self.name, name)
         self.logger.name = self.name
         self.name = name
-        self.logger_handler.setFormatter(logging.Formatter(
+        self.logger_handler.setFormatter(Formatter(
             f&#34;[color({self.color})]{self.name}[/color({self.color})]\t%(message)s&#34;))</code></pre>
 </details>
 </section>
@@ -158,7 +166,7 @@ class Enviroment(object):
 <dl>
 <dt id="enviroment.enviroment.Enviroment"><code class="flex name class">
 <span>class <span class="ident">Enviroment</span></span>
-<span>(</span><span>name: str, color: int = 1, logger_level: Literal[<Level.NOTSET: 0>, <Level.DEBUG: 10>, <Level.INFO: 20>, <Level.WARNING: 30>, <Level.ERROR: 40>, <Level.CRITICAL: 50>] = Level.NOTSET, record: bool = False)</span>
+<span>(</span><span>name: str, color: int = 79, logger_level: Literal[<Level.NOTSET: 0>, <Level.DEBUG: 10>, <Level.INFO: 20>, <Level.WARNING: 30>, <Level.ERROR: 40>, <Level.CRITICAL: 50>] = Level.NOTSET, record: bool = False)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Simple colorfull logging enviroment usable for debugging and
@@ -178,14 +186,15 @@ simple console applications</p></div>
         self.name = name
         self.logger_level = logger_level
         self.logger_handler = RichHandler(log_time_format=&#34;[%X]&#34;, markup=True)
-        self.logger = logging.getLogger(self.name)
+        self.logger = getLogger(self.name)
         self.logger.addHandler(self.logger_handler)
         self.console = Console(record=record)
         self.color = color
-        self.logger_handler.setFormatter(logging.Formatter(
+        self.logger_handler.setFormatter(Formatter(
             f&#34;[color({self.color})]{self.name}[/color({self.color})]\t%(message)s&#34;))
         self.set_logger_level(logger_level)
         self.logger.debug(&#34;&#39;%s&#39; Enviroment created&#34;, self.name)
+        self._time = time()
 
     def __del__(self):
         &#34;&#34;&#34;
@@ -222,7 +231,7 @@ simple console applications</p></div>
         &#34;&#34;&#34;
         return self.logger_handler
 
-    def get_logger(self) -&gt; logging.Logger:
+    def get_logger(self) -&gt; Logger:
         &#34;&#34;&#34;       
         Get the logger of the enviroment       
         &#34;&#34;&#34;
@@ -239,6 +248,12 @@ simple console applications</p></div>
         Get the logger level name of the enviroment       
         &#34;&#34;&#34;
         return Level(self.logger_level).name
+
+    def get_runtime(self) -&gt; float:
+        &#34;&#34;&#34;       
+        Get the runtime of the enviroment       
+        &#34;&#34;&#34;
+        return time() - self._time
 
     #  Setters
 
@@ -262,7 +277,7 @@ simple console applications</p></div>
         Set the color of the enviroment name
         &#34;&#34;&#34;
         self.color = color
-        self.logger_handler.setFormatter(logging.Formatter(
+        self.logger_handler.setFormatter(Formatter(
             f&#34;[color({self.color})]{self.name}[/color({self.color})]\t%(message)s&#34;))
 
     def set_name(self, name: str) -&gt; None:
@@ -272,7 +287,7 @@ simple console applications</p></div>
         self.logger.debug(&#34;&#39;%s&#39; Enviroment name set to &#39;%s&#39;&#34;, self.name, name)
         self.logger.name = self.name
         self.name = name
-        self.logger_handler.setFormatter(logging.Formatter(
+        self.logger_handler.setFormatter(Formatter(
             f&#34;[color({self.color})]{self.name}[/color({self.color})]\t%(message)s&#34;))</code></pre>
 </details>
 <h3>Methods</h3>
@@ -318,7 +333,7 @@ simple console applications</p></div>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_logger(self) -&gt; logging.Logger:
+<pre><code class="python">def get_logger(self) -&gt; Logger:
     &#34;&#34;&#34;       
     Get the logger of the enviroment       
     &#34;&#34;&#34;
@@ -389,6 +404,22 @@ simple console applications</p></div>
     return self.name</code></pre>
 </details>
 </dd>
+<dt id="enviroment.enviroment.Enviroment.get_runtime"><code class="name flex">
+<span>def <span class="ident">get_runtime</span></span>(<span>self) ‑> float</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Get the runtime of the enviroment</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_runtime(self) -&gt; float:
+    &#34;&#34;&#34;       
+    Get the runtime of the enviroment       
+    &#34;&#34;&#34;
+    return time() - self._time</code></pre>
+</details>
+</dd>
 <dt id="enviroment.enviroment.Enviroment.set_color"><code class="name flex">
 <span>def <span class="ident">set_color</span></span>(<span>self, color: int) ‑> NoneType</span>
 </code></dt>
@@ -403,7 +434,7 @@ simple console applications</p></div>
     Set the color of the enviroment name
     &#34;&#34;&#34;
     self.color = color
-    self.logger_handler.setFormatter(logging.Formatter(
+    self.logger_handler.setFormatter(Formatter(
         f&#34;[color({self.color})]{self.name}[/color({self.color})]\t%(message)s&#34;))</code></pre>
 </details>
 </dd>
@@ -448,7 +479,7 @@ simple console applications</p></div>
     self.logger.debug(&#34;&#39;%s&#39; Enviroment name set to &#39;%s&#39;&#34;, self.name, name)
     self.logger.name = self.name
     self.name = name
-    self.logger_handler.setFormatter(logging.Formatter(
+    self.logger_handler.setFormatter(Formatter(
         f&#34;[color({self.color})]{self.name}[/color({self.color})]\t%(message)s&#34;))</code></pre>
 </details>
 </dd>
@@ -480,6 +511,7 @@ simple console applications</p></div>
 <li><code><a title="enviroment.enviroment.Enviroment.get_logger_level" href="#enviroment.enviroment.Enviroment.get_logger_level">get_logger_level</a></code></li>
 <li><code><a title="enviroment.enviroment.Enviroment.get_logger_level_name" href="#enviroment.enviroment.Enviroment.get_logger_level_name">get_logger_level_name</a></code></li>
 <li><code><a title="enviroment.enviroment.Enviroment.get_name" href="#enviroment.enviroment.Enviroment.get_name">get_name</a></code></li>
+<li><code><a title="enviroment.enviroment.Enviroment.get_runtime" href="#enviroment.enviroment.Enviroment.get_runtime">get_runtime</a></code></li>
 <li><code><a title="enviroment.enviroment.Enviroment.set_color" href="#enviroment.enviroment.Enviroment.set_color">set_color</a></code></li>
 <li><code><a title="enviroment.enviroment.Enviroment.set_logger_level" href="#enviroment.enviroment.Enviroment.set_logger_level">set_logger_level</a></code></li>
 <li><code><a title="enviroment.enviroment.Enviroment.set_name" href="#enviroment.enviroment.Enviroment.set_name">set_name</a></code></li>
