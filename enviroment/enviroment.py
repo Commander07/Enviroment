@@ -1,6 +1,7 @@
 from logging import getLogger, Formatter, Logger
 from random import randint
 from typing import Literal
+from time import time
 from .common import Level
 try:
     from rich.logging import RichHandler
@@ -29,6 +30,7 @@ class Enviroment(object):
             f"[color({self.color})]{self.name}[/color({self.color})]\t%(message)s"))
         self.set_logger_level(logger_level)
         self.logger.debug("'%s' Enviroment created", self.name)
+        self._time = time()
 
     def __del__(self):
         """
@@ -82,6 +84,12 @@ class Enviroment(object):
         Get the logger level name of the enviroment       
         """
         return Level(self.logger_level).name
+
+    def get_runtime(self) -> float:
+        """       
+        Get the runtime of the enviroment       
+        """
+        return time() - self._time
 
     #  Setters
 
